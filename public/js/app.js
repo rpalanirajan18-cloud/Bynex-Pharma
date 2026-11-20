@@ -975,9 +975,101 @@ window.BynexApp = {
 
   handleDoctorSampleSubmit(e) {
     e.preventDefault();
+    const name = document.getElementById('doc-sample-name')?.value || 'Doctor';
+    const reg = document.getElementById('doc-sample-reg')?.value || 'N/A';
+    const hosp = document.getElementById('doc-sample-hosp')?.value || 'N/A';
+    const city = document.getElementById('doc-sample-city')?.value || 'N/A';
     const prod = document.getElementById('doc-sample-product')?.value || 'Formulation';
-    this.showToast(`Sample requisition for ${prod} received! Medical affairs team will dispatch shortly.`);
+
+    this.dispatchEnquiryToEmail({
+      type: "Physician Academic Sample Requisition",
+      name: name,
+      contact: name,
+      registrationNo: reg,
+      firm: hosp,
+      territory: city,
+      product: prod,
+      email: "bynexpharma@gmail.com",
+      phone: "Requested through Doctor Portal",
+      message: `Physician sample pack request for ${prod}. Practitioner: ${name}, Registration: ${reg}, Institution: ${hosp}, City: ${city}.`
+    });
     e.target.reset();
+  },
+
+  dispatchEnquiryToEmail(data) {
+    const inquiryId = 'BYN-' + Date.now().toString(36).toUpperCase();
+    data.id = inquiryId;
+    data.status = 'New';
+    data.date = 'Just now';
+
+    // Store locally for Admin view
+    this.store.addEnquiry(data);
+
+    // Send to server API endpoint (formats corporate email & relays)
+    try {
+      fetch('/api/send-enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).catch(() => {});
+    } catch(err) {}
+
+    // Show Confirmation & Corporate Email Preview Modal
+    this.showEnquirySentModal(data, inquiryId);
+    this.showToast(`Enquiry ${inquiryId} dispatched to bynexpharma@gmail.com!`);
+  },
+
+  showEnquirySentModal(data, inquiryId) {
+    const modal = document.getElementById('enquiry-sent-modal');
+    if (!modal) return;
+
+    const idElem = document.getElementById('preview-inquiry-id');
+    if (idElem) idElem.textContent = inquiryId;
+
+    const detailsElem = document.getElementById('preview-inquiry-details');
+    if (detailsElem) {
+      detailsElem.innerHTML = `
+        <div class="space-y-1.5 pb-2.5 border-b border-slate-100">
+          <div class="flex justify-between"><span class="text-slate-400 font-semibold">Enquiry Type:</span><span class="font-bold text-[#2E3192]">${data.type || 'Corporate Enquiry'}</span></div>
+          <div class="flex justify-between"><span class="text-slate-400 font-semibold">Inquirer Name:</span><span class="font-bold text-slate-800">${data.name || data.contact || 'N/A'}</span></div>
+          <div class="flex justify-between"><span class="text-slate-400 font-semibold">Email:</span><span class="text-slate-700">${data.email || 'N/A'}</span></div>
+          <div class="flex justify-between"><span class="text-slate-400 font-semibold">Phone:</span><span class="text-slate-700">${data.phone || 'N/A'}</span></div>
+          ${data.firm ? `<div class="flex justify-between"><span class="text-slate-400 font-semibold">Organization:</span><span class="font-bold text-slate-800">${data.firm}</span></div>` : ''}
+          ${data.drugLicense ? `<div class="flex justify-between"><span class="text-slate-400 font-semibold">Drug License (DL):</span><span class="font-mono text-slate-700 font-bold">${data.drugLicense}</span></div>` : ''}
+          ${data.territory ? `<div class="flex justify-between"><span class="text-slate-400 font-semibold">Territory:</span><span class="text-slate-700">${data.territory}</span></div>` : ''}
+          ${data.product ? `<div class="flex justify-between"><span class="text-slate-400 font-semibold">Subject Product:</span><span class="font-bold text-[#ED1C24]">${data.product}</span></div>` : ''}
+        </div>
+        ${(data.message || data.notes || data.question) ? `
+          <div class="pt-2 text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-200/80 text-[11px] leading-relaxed">
+            <strong class="text-slate-800 block mb-0.5">Message / Specification:</strong>
+            ${data.message || data.notes || data.question}
+          </div>
+        ` : ''}
+      `;
+    }
+
+    const mailSubject = encodeURIComponent(`[BYNEX PHARMA] ${data.type || 'Enquiry'} - Ref: ${inquiryId}`);
+    const mailBody = encodeURIComponent(
+      `BYNEX PHARMA Corporate Enquiry (Ref: ${inquiryId})\n` +
+      `-----------------------------------------\n` +
+      `Category: ${data.type || 'General'}\n` +
+      `Name: ${data.name || data.contact || 'N/A'}\n` +
+      `Email: ${data.email || 'N/A'}\n` +
+      `Phone: ${data.phone || 'N/A'}\n` +
+      (data.firm ? `Organization: ${data.firm}\n` : '') +
+      (data.drugLicense ? `Drug License: ${data.drugLicense}\n` : '') +
+      (data.territory ? `Territory: ${data.territory}\n` : '') +
+      (data.product ? `Product: ${data.product}\n` : '') +
+      `\nDetails:\n${data.message || data.notes || data.question || ''}\n\n` +
+      `Submitted via BYNEX PHARMA Platform\nFounder: Muthuraj`
+    );
+
+    const gmailLink = document.getElementById('enquiry-gmail-link');
+    if (gmailLink) {
+      gmailLink.href = `mailto:bynexpharma@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+    }
+
+    modal.classList.remove('hidden');
   },
 
   renderResources() {
@@ -1013,25 +1105,26 @@ window.BynexApp = {
 
   handlePartnerFormSubmit(e) {
     e.preventDefault();
-    const firm = document.getElementById('partner-firm').value;
-    const contact = document.getElementById('partner-contact').value;
-    const type = document.getElementById('partner-type').value;
-    const territory = document.getElementById('partner-territory').value;
-    const dl = document.getElementById('partner-dl').value;
+    const firm = document.getElementById('partner-firm')?.value;
+    const contact = document.getElementById('partner-contact')?.value;
+    const email = document.getElementById('partner-email')?.value;
+    const phone = document.getElementById('partner-phone')?.value;
+    const type = document.getElementById('partner-type')?.value;
+    const territory = document.getElementById('partner-territory')?.value;
+    const dl = document.getElementById('partner-dl')?.value;
+    const notes = document.getElementById('partner-notes')?.value;
 
-    const enq = {
-      id: "ENQ-" + Math.floor(1000 + Math.random() * 9000),
-      type: type,
+    this.dispatchEnquiryToEmail({
+      type: `Commercial Partnership (${type})`,
       firm: firm,
       contact: contact,
+      name: contact,
+      email: email,
+      phone: phone,
       territory: territory,
       drugLicense: dl,
-      status: "New",
-      date: "Just now"
-    };
-
-    this.store.addEnquiry(enq);
-    this.showToast('Partnership enquiry registered! Reference: ' + enq.id);
+      notes: notes
+    });
     e.target.reset();
   },
 
@@ -1043,7 +1136,20 @@ window.BynexApp = {
 
   handleContactFormSubmit(e) {
     e.preventDefault();
-    this.showToast('Your message has been dispatched to BYNEX PHARMA corporate desk.');
+    const name = document.getElementById('contact-name')?.value;
+    const email = document.getElementById('contact-email')?.value;
+    const phone = document.getElementById('contact-phone')?.value;
+    const route = document.getElementById('contact-route')?.value;
+    const message = document.getElementById('contact-message')?.value;
+
+    this.dispatchEnquiryToEmail({
+      type: route || "Corporate Contact Inquiry",
+      name: name,
+      contact: name,
+      email: email,
+      phone: phone,
+      message: message
+    });
     e.target.reset();
   },
 
@@ -1229,8 +1335,23 @@ window.BynexApp = {
 
   handleMedicalEnquirySubmit(e) {
     e.preventDefault();
-    this.showToast('Medical inquiry submitted to Medical Affairs cell.');
+    const prod = document.getElementById('modal-enquiry-product')?.value;
+    const name = document.getElementById('modal-enquiry-name')?.value;
+    const email = document.getElementById('modal-enquiry-email')?.value;
+    const phone = document.getElementById('modal-enquiry-phone')?.value;
+    const question = document.getElementById('modal-enquiry-question')?.value;
+
+    this.dispatchEnquiryToEmail({
+      type: "Medical Information & Clinical Query",
+      product: prod,
+      name: name,
+      contact: name,
+      email: email,
+      phone: phone,
+      question: question
+    });
     this.closeMedicalEnquiryModal();
+    e.target.reset();
   }
 };
 
