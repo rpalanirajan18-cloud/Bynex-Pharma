@@ -503,7 +503,34 @@ window.BynexApp = {
     }, 3500);
   },
 
+  toggleMobileMenu() {
+    const drawer = document.getElementById('mobile-drawer');
+    if (!drawer) return;
+    const isHidden = drawer.classList.contains('hidden');
+    if (isHidden) {
+      drawer.classList.remove('hidden');
+      const input = document.getElementById('mobile-drawer-search');
+      if (input) setTimeout(() => input.focus(), 120);
+    } else {
+      drawer.classList.add('hidden');
+    }
+  },
+
+  closeMobileMenu() {
+    const drawer = document.getElementById('mobile-drawer');
+    if (drawer && !drawer.classList.contains('hidden')) {
+      drawer.classList.add('hidden');
+    }
+  },
+
+  navigateToSearch(query) {
+    if (!query) return;
+    this.closeMobileMenu();
+    window.location.hash = `#/products?search=${encodeURIComponent(query.trim())}`;
+  },
+
   handleRoute() {
+    this.closeMobileMenu();
     this.triggerPageLoader();
 
     const hash = window.location.hash.replace(/^#\/?/, '') || 'home';
@@ -560,27 +587,27 @@ window.BynexApp = {
 
   buildProductCardHtml(prod) {
     return `
-      <div class="pharma-product-card p-6 flex flex-col justify-between">
+      <div class="pharma-product-card p-5 sm:p-6 flex flex-col justify-between">
         <div>
           <!-- Card Header Badges -->
-          <div class="flex items-center justify-between mb-4">
-            <span class="badge-category px-3 py-1 rounded-full text-xs font-bold">${prod.category}</span>
-            <span class="badge-rx px-2.5 py-0.5 rounded text-[11px]">${prod.dosageForm.toUpperCase()}</span>
+          <div class="flex items-center justify-between gap-2 mb-4">
+            <span class="badge-category px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold truncate max-w-[70%]">${prod.category}</span>
+            <span class="badge-rx px-2 sm:px-2.5 py-0.5 rounded text-[10px] sm:text-[11px] flex-shrink-0">${prod.dosageForm.toUpperCase()}</span>
           </div>
 
           <!-- Studio Mockup Frame with Real Packaging Image -->
-          <div class="pharma-pack-frame h-52 mb-5 p-4 flex items-center justify-center">
-            <img src="${prod.image}" alt="${prod.name}" class="max-h-44 w-auto max-w-full object-contain pointer-events-none" loading="lazy" />
+          <div class="pharma-pack-frame h-48 sm:h-52 mb-4 sm:mb-5 p-3 sm:p-4 flex items-center justify-center">
+            <img src="${prod.image}" alt="${prod.name}" class="max-h-40 sm:max-h-44 w-auto max-w-full object-contain pointer-events-none" loading="lazy" />
           </div>
 
           <!-- Product Identifiers -->
           <span class="text-[10px] font-black tracking-widest text-[#2E3192] uppercase block">BYNEX PHARMA</span>
-          <h3 class="text-xl font-black text-[#172033] hover:text-[#2E3192] transition mt-1">
+          <h3 class="text-lg sm:text-xl font-black text-[#172033] hover:text-[#2E3192] transition mt-1">
             <a href="#/product-detail?id=${prod.id}">${prod.name}</a>
           </h3>
           <p class="text-xs font-medium text-[#64748B] mt-1 line-clamp-2">${prod.molecule}</p>
           
-          <div class="mt-3 flex items-center gap-2">
+          <div class="mt-3 flex flex-wrap items-center gap-2">
             <span class="text-[11px] bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded font-bold border border-slate-200">
               ${prod.strength}
             </span>
@@ -591,11 +618,11 @@ window.BynexApp = {
         </div>
 
         <!-- Action CTA -->
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2">
-          <a href="#/product-detail?id=${prod.id}" class="flex-1 text-center py-2.5 px-3 rounded-xl bg-[#2E3192] hover:bg-[#222575] text-white text-xs font-bold transition shadow-sm">
+        <div class="mt-5 sm:mt-6 pt-4 border-t border-slate-100 flex items-center gap-2">
+          <a href="#/product-detail?id=${prod.id}" class="flex-1 text-center py-2.5 px-2 sm:px-3 rounded-xl bg-[#2E3192] hover:bg-[#222575] text-white text-[11px] sm:text-xs font-bold transition shadow-sm whitespace-nowrap">
             View Approved Monograph
           </a>
-          <button onclick="BynexApp.openMedicalEnquiryModal('${prod.name}')" title="Submit Medical Enquiry" class="p-2.5 rounded-xl border border-slate-200 hover:border-[#ED1C24] hover:text-[#ED1C24] text-slate-500 transition">
+          <button onclick="BynexApp.openMedicalEnquiryModal('${prod.name}')" title="Submit Medical Enquiry" class="p-2.5 rounded-xl border border-slate-200 hover:border-[#ED1C24] hover:text-[#ED1C24] text-slate-500 transition flex-shrink-0">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           </button>
         </div>
@@ -714,45 +741,45 @@ window.BynexApp = {
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         <!-- Left: Packaging Showcase Card -->
-        <div class="lg:col-span-5 bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm sticky top-28">
-          <div class="flex items-center justify-between mb-4">
-            <span class="badge-category px-3.5 py-1 rounded-full text-xs font-bold">${prod.category}</span>
-            <span class="badge-rx px-3 py-1 rounded text-xs">${prod.schedule}</span>
+        <div class="lg:col-span-5 bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-sm lg:sticky lg:top-28">
+          <div class="flex items-center justify-between gap-2 mb-4">
+            <span class="badge-category px-3 py-1 rounded-full text-xs font-bold truncate">${prod.category}</span>
+            <span class="badge-rx px-2.5 py-1 rounded text-xs flex-shrink-0">${prod.schedule}</span>
           </div>
 
           <!-- High-End Product Photo Showcase -->
-          <div class="pharma-pack-frame h-80 rounded-2xl p-6 flex flex-col justify-center items-center text-center my-6 shadow-inner">
-            <img src="${prod.image}" alt="${prod.name}" class="max-h-64 max-w-full object-contain" />
+          <div class="pharma-pack-frame h-64 sm:h-80 rounded-2xl p-4 sm:p-6 flex flex-col justify-center items-center text-center my-4 sm:my-6 shadow-inner">
+            <img src="${prod.image}" alt="${prod.name}" class="max-h-52 sm:max-h-64 max-w-full object-contain" />
           </div>
 
-          <div class="space-y-3 pt-4 border-t border-slate-100 text-xs">
-            <div class="flex justify-between py-1.5 border-b border-slate-100">
+          <div class="space-y-2 pt-4 border-t border-slate-100 text-xs">
+            <div class="flex flex-col sm:flex-row sm:justify-between py-1.5 border-b border-slate-100 gap-0.5">
               <span class="text-slate-500 font-medium">Strength:</span>
               <span class="font-bold text-slate-800">${prod.strength}</span>
             </div>
-            <div class="flex justify-between py-1.5 border-b border-slate-100">
+            <div class="flex flex-col sm:flex-row sm:justify-between py-1.5 border-b border-slate-100 gap-0.5">
               <span class="text-slate-500 font-medium">Dosage Form:</span>
               <span class="font-bold text-slate-800">${prod.dosageForm}</span>
             </div>
-            <div class="flex justify-between py-1.5 border-b border-slate-100">
+            <div class="flex flex-col sm:flex-row sm:justify-between py-1.5 border-b border-slate-100 gap-0.5">
               <span class="text-slate-500 font-medium">Packaging Presentation:</span>
               <span class="font-bold text-slate-800">${prod.packSize}</span>
             </div>
-            <div class="flex justify-between py-1.5 border-b border-slate-100">
+            <div class="flex flex-col sm:flex-row sm:justify-between py-1.5 border-b border-slate-100 gap-0.5">
               <span class="text-slate-500 font-medium">Storage Requirements:</span>
-              <span class="font-medium text-slate-800 text-right max-w-[210px]">${prod.storage}</span>
+              <span class="font-medium text-slate-800">${prod.storage}</span>
             </div>
-            <div class="flex justify-between py-1.5 border-b border-slate-100">
+            <div class="flex flex-col sm:flex-row sm:justify-between py-1.5 border-b border-slate-100 gap-0.5">
               <span class="text-slate-500 font-medium">Marketer:</span>
               <span class="font-bold text-slate-800">${prod.marketer}</span>
             </div>
-            <div class="flex justify-between py-1.5">
+            <div class="flex flex-col sm:flex-row sm:justify-between py-1.5 gap-0.5">
               <span class="text-slate-500 font-medium">Manufacturing Quality:</span>
               <span class="font-medium text-slate-800">${prod.manufacturer}</span>
             </div>
           </div>
 
-          <div class="mt-8 space-y-3">
+          <div class="mt-6 sm:mt-8 space-y-3">
             <button onclick="BynexApp.openMedicalEnquiryModal('${prod.name}')" class="w-full py-3.5 px-4 rounded-xl bg-[#ED1C24] hover:bg-[#D0141B] text-white text-xs font-bold tracking-wide uppercase shadow-sm transition">
               Submit Medical Information Enquiry
             </button>
@@ -764,7 +791,7 @@ window.BynexApp = {
 
         <!-- Right: Approved Monograph & Clinical Data -->
         <div class="lg:col-span-7 space-y-6">
-          <div class="bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm">
+          <div class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-sm">
             <span class="text-xs font-extrabold text-[#2E3192] tracking-wider uppercase">Official Product Monograph</span>
             <h1 class="text-2xl lg:text-3xl font-extrabold text-[#172033] mt-1">${prod.name}</h1>
             <p class="text-sm font-semibold text-slate-600 mt-2">${prod.molecule}</p>

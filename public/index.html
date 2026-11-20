@@ -149,11 +149,11 @@
   <!-- Sticky Main Navigation Header -->
   <header class="sticky top-0 z-40 glass-header">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20">
+      <div class="flex items-center justify-between h-16 sm:h-20">
         
         <!-- Left: Official BYNEX PHARMA Logo -->
-        <a href="#/home" class="flex items-center gap-3 py-2 focus:outline-none">
-          <img src="/assets/logo.png" alt="BYNEX PHARMA" class="h-12 w-auto max-w-[210px] object-contain" />
+        <a href="#/home" class="flex items-center gap-2 sm:gap-3 py-2 focus:outline-none min-w-0">
+          <img src="/assets/logo.png" alt="BYNEX PHARMA" class="h-9 sm:h-12 w-auto max-w-[165px] sm:max-w-[210px] object-contain flex-shrink-0" />
         </a>
 
         <!-- Center: Desktop Navigation Links -->
@@ -168,21 +168,21 @@
         </nav>
 
         <!-- Right: Search trigger & Direct Corporate Partner CTA -->
-        <div class="flex items-center gap-3">
-          <a href="#/products" title="Search Products" class="p-2.5 rounded-xl text-slate-600 hover:text-[#2E3192] hover:bg-slate-100 transition focus:outline-none">
+        <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <a href="#/products" title="Search Products" class="p-2 sm:p-2.5 rounded-xl text-slate-600 hover:text-[#2E3192] hover:bg-slate-100 transition focus:outline-none">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </a>
 
-          <div id="header-cta-action">
-            <a href="#/partner" class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#ED1C24] hover:bg-[#D0141B] text-white text-xs font-bold transition shadow-sm">
+          <div id="header-cta-action" class="hidden sm:block">
+            <a href="#/partner" class="flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-[#ED1C24] hover:bg-[#D0141B] text-white text-xs font-bold transition shadow-sm whitespace-nowrap">
               <span>Partner With Us</span>
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </a>
           </div>
 
-          <button onclick="document.getElementById('mobile-drawer').classList.toggle('hidden')" class="xl:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none">
+          <button onclick="BynexApp.toggleMobileMenu()" aria-label="Toggle Navigation Menu" class="xl:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
@@ -192,15 +192,53 @@
     </div>
 
     <!-- Mobile Slide-out Menu -->
-    <div id="mobile-drawer" class="hidden xl:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-3 text-sm">
-      <a href="#/home" onclick="document.getElementById('mobile-drawer').classList.add('hidden')" class="block py-2 font-semibold text-[#2E3192]">Home</a>
-      <a href="#/about" onclick="document.getElementById('mobile-drawer').classList.add('hidden')" class="block py-2 text-slate-700 font-medium">About Us</a>
-      <a href="#/products" onclick="document.getElementById('mobile-drawer').classList.add('hidden')" class="block py-2 text-slate-700 font-medium">Products</a>
-      <a href="#/doctors" onclick="document.getElementById('mobile-drawer').classList.add('hidden')" class="block py-2 text-slate-700 font-medium">Clinical Portfolio</a>
-      <a href="#/resources" onclick="document.getElementById('mobile-drawer').classList.add('hidden')" class="block py-2 text-slate-700 font-medium">Resources</a>
-      <a href="#/partner" onclick="document.getElementById('mobile-drawer').classList.add('hidden')" class="block py-2 text-slate-700 font-medium">Partner With Us</a>
-      <a href="#/contact" onclick="document.getElementById('mobile-drawer').classList.add('hidden')" class="block py-2 text-slate-700 font-medium">Contact Us</a>
-      <a href="#/admin" onclick="document.getElementById('mobile-drawer').classList.add('hidden')" class="block py-2 text-red-600 font-bold border-t border-slate-100">Admin Console</a>
+    <div id="mobile-drawer" class="hidden xl:hidden bg-white/98 backdrop-blur-xl border-b border-slate-200 px-5 py-4 space-y-3 text-sm shadow-xl">
+      <!-- Quick search on mobile -->
+      <div class="relative pb-1">
+        <input type="text" id="mobile-drawer-search" onkeydown="if(event.key==='Enter'){BynexApp.navigateToSearch(this.value)}" placeholder="Search formulation or molecule..." class="w-full pl-9 pr-4 py-2.5 rounded-xl border border-slate-200 text-xs form-input-focus bg-slate-50" />
+        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      </div>
+
+      <div class="grid grid-cols-1 gap-1 font-medium text-slate-700 pt-1">
+        <a href="#/home" onclick="BynexApp.closeMobileMenu()" class="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-blue-50 hover:text-[#2E3192] transition">
+          <span>Home</span>
+          <span class="text-xs text-slate-400">→</span>
+        </a>
+        <a href="#/about" onclick="BynexApp.closeMobileMenu()" class="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-blue-50 hover:text-[#2E3192] transition">
+          <span>About Us & Founder</span>
+          <span class="text-xs text-slate-400">→</span>
+        </a>
+        <a href="#/products" onclick="BynexApp.closeMobileMenu()" class="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-blue-50 hover:text-[#2E3192] transition">
+          <span>Products (11 Approved)</span>
+          <span class="text-xs text-slate-400">→</span>
+        </a>
+        <a href="#/doctors" onclick="BynexApp.closeMobileMenu()" class="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-blue-50 hover:text-[#2E3192] transition">
+          <span>Clinical Portfolio (Doctors)</span>
+          <span class="text-xs text-slate-400">→</span>
+        </a>
+        <a href="#/resources" onclick="BynexApp.closeMobileMenu()" class="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-blue-50 hover:text-[#2E3192] transition">
+          <span>Resources & Dossiers</span>
+          <span class="text-xs text-slate-400">→</span>
+        </a>
+        <a href="#/partner" onclick="BynexApp.closeMobileMenu()" class="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-blue-50 hover:text-[#2E3192] transition">
+          <span>Partner With Us</span>
+          <span class="text-xs text-slate-400">→</span>
+        </a>
+        <a href="#/contact" onclick="BynexApp.closeMobileMenu()" class="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-blue-50 hover:text-[#2E3192] transition">
+          <span>Contact Us</span>
+          <span class="text-xs text-slate-400">→</span>
+        </a>
+      </div>
+
+      <div class="pt-3 border-t border-slate-100 flex flex-col gap-2">
+        <a href="#/partner" onclick="BynexApp.closeMobileMenu()" class="w-full py-3 rounded-xl bg-[#ED1C24] text-white text-xs font-bold text-center uppercase tracking-wider shadow-md">
+          Partner With Us
+        </a>
+        <div class="flex items-center justify-between pt-1 text-[11px] text-slate-500">
+          <a href="mailto:bynexpharma@gmail.com" class="hover:text-[#2E3192]">bynexpharma@gmail.com</a>
+          <a href="#/admin" onclick="BynexApp.closeMobileMenu()" class="text-slate-400 hover:text-slate-600 font-semibold">Admin Console</a>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -386,7 +424,7 @@
                 Founded under the strategic vision of <strong>Muthuraj</strong>, BYNEX PHARMA is dedicated to delivering high-efficacy, certified formulations across vital medical specialties. Driven by our guiding philosophy, <strong>"Healthcare for a Healthier Tomorrow"</strong>, we blend rigorous quality benchmarks with dependable nationwide distribution.
               </p>
 
-              <div class="grid grid-cols-2 gap-6 pt-2">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
                 <div class="border-l-2 border-[#2E3192] pl-4 flex items-center gap-3.5 group">
                   <div class="relative flex-shrink-0">
                     <div class="w-14 h-14 rounded-2xl overflow-hidden p-0.5 bg-gradient-to-tr from-[#ED1C24] via-blue-600 to-[#2E3192] shadow-md group-hover:shadow-lg transition">
@@ -416,20 +454,20 @@
               </div>
             </div>
 
-            <div class="lg:col-span-6 grid grid-cols-2 gap-4">
-              <div class="p-6 rounded-2xl bg-[#F7F8FC] border border-slate-200">
+            <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-5 sm:p-6 rounded-2xl bg-[#F7F8FC] border border-slate-200">
                 <h4 class="text-sm font-bold text-slate-800">Quality Benchmark</h4>
                 <p class="text-xs text-slate-500 mt-1">Manufactured in cutting-edge facilities complying with Schedule M and current Good Manufacturing Practices.</p>
               </div>
-              <div class="p-6 rounded-2xl bg-[#F7F8FC] border border-slate-200">
+              <div class="p-5 sm:p-6 rounded-2xl bg-[#F7F8FC] border border-slate-200">
                 <h4 class="text-sm font-bold text-slate-800">Stability & Batch Control</h4>
                 <p class="text-xs text-slate-500 mt-1">Every formulation undergoes real-time and accelerated climatic zone stability validation.</p>
               </div>
-              <div class="p-6 rounded-2xl bg-[#F7F8FC] border border-slate-200">
+              <div class="p-5 sm:p-6 rounded-2xl bg-[#F7F8FC] border border-slate-200">
                 <h4 class="text-sm font-bold text-slate-800">Strict Quality Assurance</h4>
                 <p class="text-xs text-slate-500 mt-1">Multi-tier analytical release testing for dissolution, assay, and microbiological purity.</p>
               </div>
-              <div class="p-6 rounded-2xl bg-[#F7F8FC] border border-slate-200">
+              <div class="p-5 sm:p-6 rounded-2xl bg-[#F7F8FC] border border-slate-200">
                 <h4 class="text-sm font-bold text-slate-800">Pharmacovigilance</h4>
                 <p class="text-xs text-slate-500 mt-1">Active surveillance cell tracking product safety, adverse reactions, and feedback.</p>
               </div>
@@ -663,7 +701,7 @@
         </div>
 
         <!-- FOUNDER & EXECUTIVE LEADERSHIP SPOTLIGHT -->
-        <div class="bg-gradient-to-br from-[#2E3192] to-[#1C1F63] rounded-3xl p-8 lg:p-12 text-white shadow-xl mb-12 reveal-on-scroll">
+        <div class="bg-gradient-to-br from-[#2E3192] to-[#1C1F63] rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 text-white shadow-xl mb-12 reveal-on-scroll">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <!-- Left: Prominent Executive Founder Portrait -->
@@ -673,15 +711,15 @@
                 <div class="absolute -inset-2 bg-gradient-to-tr from-[#ED1C24] via-amber-300/40 to-[#2E3192] rounded-[28px] blur-xl opacity-60 group-hover:opacity-100 transition-all duration-700"></div>
                 
                 <!-- Main Executive Frame with Glassmorphism Ring -->
-                <div class="relative w-56 h-64 sm:w-64 sm:h-72 rounded-[24px] p-2 bg-white/20 backdrop-blur-xl border-2 border-white/60 shadow-2xl ring-4 ring-white/15 overflow-hidden">
-                  <img src="/assets/founder.jpg" alt="Muthuraj - Founder & Managing Director, BYNEX PHARMA" class="w-full h-full object-cover object-top rounded-[18px] shadow-inner transition-transform duration-700 ease-out group-hover:scale-105" />
+                <div class="relative w-52 h-60 sm:w-64 sm:h-72 max-w-[82vw] rounded-[22px] sm:rounded-[24px] p-2 bg-white/20 backdrop-blur-xl border-2 border-white/60 shadow-2xl ring-4 ring-white/15 overflow-hidden">
+                  <img src="/assets/founder.jpg" alt="Muthuraj - Founder & Managing Director, BYNEX PHARMA" class="w-full h-full object-cover object-top rounded-[16px] sm:rounded-[18px] shadow-inner transition-transform duration-700 ease-out group-hover:scale-105" />
                   
                   <!-- Subtle Bottom Vignette Gradient for Depth -->
-                  <div class="absolute inset-x-2 bottom-2 h-16 bg-gradient-to-t from-black/50 to-transparent rounded-b-[18px] pointer-events-none"></div>
+                  <div class="absolute inset-x-2 bottom-2 h-16 bg-gradient-to-t from-black/50 to-transparent rounded-b-[16px] sm:rounded-b-[18px] pointer-events-none"></div>
                 </div>
 
                 <!-- Floating Prominent Executive Badge -->
-                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#ED1C24] to-[#B91C1C] text-white text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full shadow-2xl border-2 border-white flex items-center gap-2 whitespace-nowrap z-10">
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#ED1C24] to-[#B91C1C] text-white text-[10px] sm:text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full shadow-2xl border-2 border-white flex items-center gap-1.5 whitespace-nowrap z-10">
                   <span class="w-2 h-2 rounded-full bg-amber-300 animate-pulse"></span>
                   <span>FOUNDER & MD</span>
                 </div>
@@ -774,7 +812,7 @@
           </p>
         </div>
 
-        <div class="bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm max-w-2xl">
+        <div class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-sm max-w-2xl">
           <form onsubmit="BynexApp.handlePartnerFormSubmit(event)" class="space-y-4 text-xs">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
@@ -867,7 +905,7 @@
               </div>
             </div>
           </div>
-          <div class="lg:col-span-7 bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm">
+          <div class="lg:col-span-7 bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-sm">
             <form onsubmit="BynexApp.handleContactFormSubmit(event)" class="space-y-4 text-xs">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -1109,11 +1147,11 @@
           <p class="text-[11px] text-slate-400 mt-1">Prescription formulations are dispensed solely against valid registered medical prescriptions.</p>
         </div>
       </div>
-      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-2">
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-3 text-center sm:text-left">
         <div>
           © 2026 BYNEX PHARMA PVT. LTD. • Founder: Muthuraj. All rights reserved.
         </div>
-        <div class="flex items-center gap-4">
+        <div class="flex flex-wrap items-center justify-center sm:justify-end gap-4">
           <a href="#/admin" class="hover:text-slate-400">Admin Console</a>
           <a href="#/resources" class="hover:text-slate-400">Regulatory Dossiers</a>
           <a href="#/contact" class="hover:text-slate-400">Pharmacovigilance</a>
