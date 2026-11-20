@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "outputDirectory": "public",
+  "routes": [
+    {
+      "src": "/api/send-enquiry",
+      "dest": "/api/send-enquiry.js"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "/js/$1"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
