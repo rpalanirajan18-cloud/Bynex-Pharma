@@ -1,0 +1,13 @@
+# BYNEX PHARMA Robots Configuration
+# Allow all search engine crawlers to discover all formulations and pages
+
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /css/
+Allow: /js/
+Disallow: /admin
+
+# Sitemaps
+Sitemap: https://bynex-pharma.vercel.app/sitemap.xml
+Sitemap: https://bynexpharma.com/sitemap.xml

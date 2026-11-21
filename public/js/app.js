@@ -529,6 +529,36 @@ window.BynexApp = {
     window.location.hash = `#/products?search=${encodeURIComponent(query.trim())}`;
   },
 
+  updatePageMeta({ title, description, keywords, ogImage }) {
+    if (title) {
+      document.title = title;
+      const metaTitle = document.querySelector('meta[name="title"]');
+      if (metaTitle) metaTitle.setAttribute('content', title);
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute('content', title);
+      const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+      if (twitterTitle) twitterTitle.setAttribute('content', title);
+    }
+    if (description) {
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.setAttribute('content', description);
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute('content', description);
+      const twitterDesc = document.querySelector('meta[name="twitter:description"]');
+      if (twitterDesc) twitterDesc.setAttribute('content', description);
+    }
+    if (keywords) {
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (metaKeywords) metaKeywords.setAttribute('content', keywords);
+    }
+    if (ogImage) {
+      const ogImg = document.querySelector('meta[property="og:image"]');
+      if (ogImg) ogImg.setAttribute('content', ogImage);
+      const twitterImg = document.querySelector('meta[name="twitter:image"]');
+      if (twitterImg) twitterImg.setAttribute('content', ogImage);
+    }
+  },
+
   handleRoute() {
     this.closeMobileMenu();
     this.triggerPageLoader();
@@ -575,6 +605,12 @@ window.BynexApp = {
     const page = document.getElementById('page-home');
     if (!page) return;
     page.classList.remove('hidden');
+
+    this.updatePageMeta({
+      title: 'BYNEX PHARMA – Healthcare for a Healthier Tomorrow | Leading Pharmaceutical Formulations India | Founder Muthuraj',
+      description: 'Official corporate digital platform of BYNEX PHARMA, founded by Muthuraj. Discover approved pharmaceutical formulations: Dydro Ova, Cisomax, Fatigfite-5g, Bon Walk, Tinycal, Chondro Life, Hb-5, I Fol Dha, Mag V3, Mag V3 60K, Argi Total, clinical monographs, and PCD distribution partnerships across India.',
+      keywords: 'BYNEX PHARMA, Muthuraj, Muthuraj Bynex, pharmaceutical company India, Dydro Ova, Cisomax, Fatigfite 5g, Bon Walk, Tinycal, Chondro Life, Hb-5, I Fol Dha, Mag V3, Argi Total, PCD pharma franchise Tamil Nadu, Avudayanoor pharma'
+    });
 
     const featuredContainer = document.getElementById('home-featured-products');
     if (featuredContainer) {
@@ -642,6 +678,18 @@ window.BynexApp = {
     if (searchInput) searchInput.value = this.productFilters.search;
     if (categorySelect) categorySelect.value = this.productFilters.category;
     if (dosageSelect) dosageSelect.value = this.productFilters.dosage;
+
+    const activeSearch = this.productFilters.search;
+    const activeCat = this.productFilters.category;
+    let pageTitle = 'Approved Pharmaceutical Formulations & Products | BYNEX PHARMA';
+    if (activeSearch) pageTitle = `Search: "${activeSearch}" | BYNEX PHARMA Formulations`;
+    else if (activeCat) pageTitle = `${activeCat} Formulations | BYNEX PHARMA`;
+
+    this.updatePageMeta({
+      title: pageTitle,
+      description: 'Explore the approved formulation portfolio of BYNEX PHARMA: Dydro Ova, Cisomax, Fatigfite-5g, Bon Walk, Tinycal, Chondro Life, Hb-5, I Fol Dha, Mag V3, and Argi Total.',
+      keywords: 'BYNEX PHARMA products, Dydro Ova Tablet, Cisomax Tablet, Fatigfite-5g, Bon Walk, Tinycal, Chondro Life, Hb-5, I Fol Dha, Mag V3, Argi Total'
+    });
 
     this.filterAndRenderProductGrid();
   },
@@ -725,6 +773,13 @@ window.BynexApp = {
     const prod = this.store.products.find(p => p.id === prodId) || this.store.products[0];
     this.selectedProductId = prod.id;
     const isDoctor = this.store.currentUser && this.store.currentUser.role === 'doctor';
+
+    this.updatePageMeta({
+      title: `${prod.name} (${prod.strength}) – ${prod.dosageForm} | BYNEX PHARMA Formulations`,
+      description: `${prod.name}: ${prod.composition}. Clinical Indications: ${prod.indications.slice(0, 150)}... Marketed by BYNEX PHARMA. Founder Muthuraj.`,
+      keywords: `${prod.name}, ${prod.molecule}, ${prod.category}, ${prod.dosageForm}, ${prod.strength}, BYNEX PHARMA, Muthuraj, Avudayanoor`,
+      ogImage: window.location.origin + prod.image
+    });
 
     const container = document.getElementById('product-detail-view-container');
     if (!container) return;
@@ -877,12 +932,24 @@ window.BynexApp = {
     const page = document.getElementById('page-about');
     if (!page) return;
     page.classList.remove('hidden');
+
+    this.updatePageMeta({
+      title: 'About BYNEX PHARMA | Leadership of Founder Muthuraj | Healthcare for a Healthier Tomorrow',
+      description: 'Discover BYNEX PHARMA, founded by Muthuraj. Headquartered in Avudayanoor, Tenkasi District, Tamil Nadu. Committed to clinical integrity, strict pharmacopeial compliance, and equitable medicine accessibility across India.',
+      keywords: 'About BYNEX PHARMA, Muthuraj, Muthuraj Bynex, Founder Muthuraj, Avudayanoor pharma, Healthcare for a Healthier Tomorrow, ethical pharma company India'
+    });
   },
 
   renderDoctorPortal() {
     const page = document.getElementById('page-doctors');
     if (!page) return;
     page.classList.remove('hidden');
+
+    this.updatePageMeta({
+      title: 'Clinical Portfolio & Doctor Sample Requests | BYNEX PHARMA Medical Affairs',
+      description: 'Physician portal and clinical formulation dossiers for practicing medical practitioners. Request evaluation samples for Dydro Ova, Cisomax, Hb-5, and specialty therapeutics.',
+      keywords: 'BYNEX PHARMA doctors, clinical monographs, physician evaluation samples, doctor sample request, Dydro Ova monograph, Cisomax clinical dossier'
+    });
 
     const container = document.getElementById('doctor-portal-content');
     if (!container) return;
@@ -1104,6 +1171,12 @@ window.BynexApp = {
     if (!page) return;
     page.classList.remove('hidden');
 
+    this.updatePageMeta({
+      title: 'Pharmaceutical Resources, Dossiers & Monographs | BYNEX PHARMA',
+      description: 'Download official clinical trial monographs, stability studies, formulation brochures, and regulatory declarations from the BYNEX PHARMA medical documentation library.',
+      keywords: 'BYNEX PHARMA dossiers, clinical monographs download, Dydro Ova efficacy dossier, Cisomax clinical study, pharmaceutical documents'
+    });
+
     const container = document.getElementById('resources-list-container');
     if (!container) return;
 
@@ -1128,6 +1201,12 @@ window.BynexApp = {
     const page = document.getElementById('page-partner');
     if (!page) return;
     page.classList.remove('hidden');
+
+    this.updatePageMeta({
+      title: 'PCD Pharma Franchise & Distribution Partnership India | BYNEX PHARMA',
+      description: 'Partner with BYNEX PHARMA for PCD pharma franchise and ethical distribution rights across India. Monopoly marketing rights, certified quality formulations, and prompt dispatch.',
+      keywords: 'PCD pharma franchise, pharma franchise Tamil Nadu, pharma distributor India, BYNEX PHARMA franchise, medicine stockist monopoly rights, Avudayanoor'
+    });
   },
 
   handlePartnerFormSubmit(e) {
@@ -1159,6 +1238,12 @@ window.BynexApp = {
     const page = document.getElementById('page-contact');
     if (!page) return;
     page.classList.remove('hidden');
+
+    this.updatePageMeta({
+      title: 'Contact BYNEX PHARMA | Corporate Headquarters Avudayanoor, Tamil Nadu',
+      description: 'Contact BYNEX PHARMA PVT. LTD. Founder Muthuraj. Email: bynexpharma@gmail.com. Corporate operations in Avudayanoor, Tenkasi District, Tamil Nadu, India.',
+      keywords: 'Contact BYNEX PHARMA, bynexpharma@gmail.com, Muthuraj contact, Avudayanoor Tenkasi, pharma company address'
+    });
   },
 
   handleContactFormSubmit(e) {

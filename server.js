@@ -20,7 +20,9 @@ const MIME_TYPES = {
   '.woff2': 'font/woff2',
   '.woff': 'font/woff',
   '.ttf': 'font/ttf',
-  '.pdf': 'application/pdf'
+  '.pdf': 'application/pdf',
+  '.xml': 'application/xml; charset=UTF-8',
+  '.txt': 'text/plain; charset=UTF-8'
 };
 
 function generateCorporateEmailHtml(data, inquiryId) {

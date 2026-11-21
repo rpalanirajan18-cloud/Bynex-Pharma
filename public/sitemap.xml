@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Core Platform Pages -->
+  <url>
+    <loc>https://bynex-pharma.vercel.app/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://bynex-pharma.vercel.app/assets/logo.png</image:loc>
+      <image:title>BYNEX PHARMA Corporate Logo</image:title>
+      <image:caption>Healthcare for a Healthier Tomorrow</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/products</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/about</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://bynex-pharma.vercel.app/assets/founder.jpg</image:loc>
+      <image:title>Muthuraj - Founder and Managing Director, BYNEX PHARMA</image:title>
+      <image:caption>Executive Leadership from Avudayanoor, Tamil Nadu</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/doctors</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/partner</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/resources</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/contact</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Individual Approved Pharmaceutical Product Monographs -->
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/product-detail?id=BYN-DYDRO</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://bynex-pharma.vercel.app/assets/products/dydro-ova-tab.webp</image:loc>
+      <image:title>Dydro Ova Tablet - Dydrogesterone IP 10 mg</image:title>
+      <image:caption>Approved for Gynecological and Endocrine Therapy</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/product-detail?id=BYN-CISO</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://bynex-pharma.vercel.app/assets/products/cisomax-tab.webp</image:loc>
+      <image:title>Cisomax Tablet - Myo-Inositol, D-Chiro-Inositol 40:1, L-Methylfolate</image:title>
+      <image:caption>PCOS, Ovulatory and Metabolic Support Formulation</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/product-detail?id=BYN-FATIG</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://bynex-pharma.vercel.app/assets/products/fatigfite-5g-softgel-cap.webp</image:loc>
+      <image:title>Fatigfite-5g Softgel Capsule - 5G Vitality and Antioxidant Complex</image:title>
+      <image:caption>Panax Ginseng, Ginkgo Biloba, Green Tea, Grape Seed, Garlic Complex</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/product-detail?id=BYN-BON</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://bynex-pharma.vercel.app/assets/products/bon-walk-softgel-cap.jpg</image:loc>
+      <image:title>Bon Walk Softgel Capsule - Cissus Quadrangularis, Boswellia, Glucosamine</image:title>
+      <image:caption>Bioactive Joint and Cartilage Regeneration Matrix</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/product-detail?id=BYN-TINY</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://bynex-pharma.vercel.app/assets/products/tinycal-softgel-cap.jpg</image:loc>
+      <image:title>Tinycal Softgel Capsule - Calcium Citrate Malate, Calcitriol, K2-7</image:title>
+      <image:caption>Triple Action Bone Mineralization and Osteoporosis Therapy</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/product-detail?id=BYN-CHONDRO</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://bynex-pharma.vercel.app/assets/products/chondro-life-tab.jpg</image:loc>
+      <image:title>Chondro Life Tablet - Glucosamine, Chondroitin, MSM, Hyaluronic Acid</image:title>
+      <image:caption>Cartilage Protection and Synovial Fluid Lubrication</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/product-detail?id=BYN-HB5</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://bynex-pharma.vercel.app/assets/products/hb-5-softgel-cap.webp</image:loc>
+      <image:title>Hb-5 Softgel Capsule - Ferrous Asparto-Glycinate, L-Methylfolate</image:title>
+      <image:caption>Non-Constipating Amino Acid Chelated Iron Anemia Therapy</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/product-detail?id=BYN-IFOL</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://bynex-pharma.vercel.app/assets/products/i-fol-dha-softgel-cap.jpg</image:loc>
+      <image:title>I Fol Dha Softgel Capsule - L-Methylfolate, DHA 40%, Vitamin D3</image:title>
+      <image:caption>Active Prenatal Maternal and Fetal Neurodevelopment Support</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/product-detail?id=BYN-MAG60K</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://bynex-pharma.vercel.app/assets/products/mag-v3-60k-combikit-tab.webp</image:loc>
+      <image:title>Mag V3 60K Combikit Tablet - Cholecalciferol 60,000 IU + Magnesium</image:title>
+      <image:caption>Weekly High Potency Vitamin D3 and Magnesium Synergistic Combikit</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/product-detail?id=BYN-MAG</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://bynex-pharma.vercel.app/assets/products/mag-v3-tab.jpg</image:loc>
+      <image:title>Mag V3 Tablet - Magnesium Bisglycinate Chelate, Vitamin D3, B12</image:title>
+      <image:caption>Neuromuscular Relaxation, Nocturnal Cramp Relief, and Nerve Support</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://bynex-pharma.vercel.app/#/product-detail?id=BYN-ARGI</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://bynex-pharma.vercel.app/assets/products/argi-total-sachet.jpg</image:loc>
+      <image:title>Argi Total Sachet - L-Arginine, Proanthocyanidins, DHA, Folic Acid</image:title>
+      <image:caption>Uteroplacental Flow, IUGR, and Nitric Oxide Donor Formulation</image:caption>
+    </image:image>
+  </url>
+
+</urlset>
